@@ -24,7 +24,7 @@
             :rules="[rules.required, rules.class_or_price]"
             outlined
             dense
-            label="MibaoClassID or Price"
+            label="MibaoClassID or HecoAddress"
             type="text"
           >
             <template v-slot:append>
@@ -81,7 +81,7 @@ export default {
   components: {
   },
   data: () => ({
-      message: "请输入您要出售的知识或信息...\n并在下框输入解锁该知识所需的 Mibao Class ID 或者 金额(RMB)",
+      message: "请输入您要出售的知识或信息...\n并在下框输入解锁该知识所需的 Mibao Class ID \n或者 输入您的HecoChain钱包地址,我们将为你铸造HRC721代币\n",
       loading: false,
       order_id: '',
       qr_code: '',
