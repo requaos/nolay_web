@@ -8,8 +8,12 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "axios": "^0.21.4",
     "core-js": "^3.6.5",
-    "vue": "^2.6.11"
+    "crypto-js": "^4.1.1",
+    "sass-loader": "^12.1.0",
+    "vue": "^2.6.11",
+    "vuetify": "^2.5.8"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

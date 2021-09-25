@@ -1,0 +1,8 @@
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+#app {
+  background-image: radial-gradient(circle at top, #2e084d 5%, #212025 95%);
+}
