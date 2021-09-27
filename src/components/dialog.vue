@@ -100,7 +100,7 @@ export default {
   components: {
   },
   data: () => ({
-      message: "请输入您要出售的知识或信息...\n并在下框输入您的CKB收款地址 和 知识的售价\n或者\n输入解锁该知识所须的 Mibao Class ID  \n",
+      message: "Please enter the Infomations you want to sell...\nenter your CKBAddress and Price in the box below \nor\nEnter a MibaoClassID which would be used in decryption\n",
       loading: false,
       order_id: '',
       qr_code: '',
