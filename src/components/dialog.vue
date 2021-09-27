@@ -16,15 +16,15 @@
     <v-container>
       <v-row
        style="margin-top: -40px">
-        <v-col cols="12" md="8"
-        offset-md="2"
+        <v-col cols="12" md="7"
+        offset-md="1"
         > 
           <v-text-field
             v-model="class_id_or_price"
             :rules="[rules.required, rules.class_or_price]"
             outlined
             dense
-            label="MibaoClassID or HecoAddress"
+            label="MibaoClassID or CKBAddress"
             type="text"
           >
             <template v-slot:append>
@@ -37,12 +37,25 @@
                 ></v-progress-circular>
               </v-fade-transition>
             </template>
-          </v-text-field>
+          </v-text-field> <!-- 这个地方是 小框框 -->
+        </v-col>
+        <v-col cols="12" md="2"
+        >
+            <v-text-field
+            v-model="price"
+            :disabled="notCKBAddress"
+            :rules="[rules.is_price]"
+            outlined
+            dense
+            label="Price"
+            type="text"
+          >
+            </v-text-field>
         </v-col>
         <v-col cols="12" md="1"
         >
             <v-menu offset-y
-             :disabled="notEthAddress"
+             :disabled="notCKBAddress"
             >
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn
@@ -57,7 +70,13 @@
                     </v-btn>
                 </template>
                 <v-list>
+                  <v-progress-circular 
+                    indeterminate
+                    v-if="qr_code == ''"
+                    color="purple"
+                  ></v-progress-circular> <!-- 爱的魔力转圈圈 -->
                     <img :src="qr_code"
+                      v-if="qr_code != ''"
                       style="border-radius: 8px;"
                       width="100" height="100"
                     >
@@ -81,7 +100,7 @@ export default {
   components: {
   },
   data: () => ({
-      message: "请输入您要出售的知识或信息...\n并在下框输入解锁该知识所需的 Mibao Class ID \n或者 输入您的HecoChain钱包地址,我们将为你铸造HRC721代币\n",
+      message: "请输入您要出售的知识或信息...\n并在下框输入您的CKB收款地址 和 知识的售价\n或者\n输入解锁该知识所须的 Mibao Class ID  \n",
       loading: false,
       order_id: '',
       qr_code: '',
@@ -89,16 +108,21 @@ export default {
       unenc_message: "",
       paid: false,
       order_done: false,
+      price: 0,
       rules: {
         required: value => !!value || 'Required.',
         counter: value => value.length <= 36 || 'Max 36 characters',
         class_or_price: value => {
-          const pattern_eth = /^0x[a-fA-F0-9]{40}$/
+          const pattern_ckb = /^ckb[0-9a-fA-F]+/
           const pattern_class = /[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/
           var is_class_id = pattern_class.test(value)
-          var is_price = pattern_eth.test(value)
+          var is_price = pattern_ckb.test(value)
           var ret = is_class_id || is_price
           return ret || 'Invalid Mibao Class id.'
+        },
+        is_price: value => {
+          const pattern_price = /^([1-9]\d{0,6}|0)?$/
+          return pattern_price.test(value) || 'Invalid Price.'
         }
       }
     }),
@@ -110,8 +134,8 @@ export default {
           return is_class_id
         },
         isEthAddress () {
-          const pattern_eth = /^0x[a-fA-F0-9]{40}$/
-          var is_class_id = pattern_eth.test(this.class_id_or_price)
+          const pattern_ckb = /^ckb[0-9a-fA-F]+/
+          var is_class_id = pattern_ckb.test(this.class_id_or_price)
           return is_class_id
         },
         sendRequest: function() {
@@ -121,7 +145,7 @@ export default {
             if(this.isClassId()){
                 //   发送bind请求 
                 that.loading = true;
-                axios.get('https://leepanda.top:5000/new_bind_order/' + this.class_id_or_price)
+                axios.get('https://api.nolay.tech:5000/new_bind_order/' + this.class_id_or_price)
                     .then(function (response) {
                         // 用返回结果 加密 unenc_message
                         console.log(response);
@@ -135,7 +159,7 @@ export default {
                                 mode: CryptoJS.mode.CBC,
                                 padding: CryptoJS.pad.Pkcs7
                             }).toString()
-                            const BASE_LABEL = '<script src="https://unpkg.com/nolayreading@0.1.0/dist/nft-card.min.js"></scrip' + 't>'
+                            const BASE_LABEL = '<script src="https://unpkg.com/nolayreading@latest/dist/nft-card.min.js"></scrip' + 't>'
                             that.message = BASE_LABEL + '<nolay-card tokenid="' + that.class_id_or_price + '" enc_message="' + message + '"></nolay-card>'
                         }else{
                             that.message = response.data.reason
@@ -148,7 +172,7 @@ export default {
                 return true;
             }else if(this.isEthAddress()){
                 //   发送mint请求 
-                axios.get('https://leepanda.top:5000/new_create_order/' + this.class_id_or_price)
+                axios.get('https://api.nolay.tech:5000/new_create_order/' + this.class_id_or_price + "/" + this.price)
                     .then(function (response) {
                         // 用返回结果 加密 unenc_message
                         console.log(response)
@@ -181,7 +205,7 @@ export default {
           var that = this
           setTimeout(()=>{
           // 这里ajax 请求的代码片段和判断是否停止定时器
-            axios.get('https://leepanda.top:5000/query_order_status/' + that.order_id)
+            axios.get('https://api.nolay.tech:5000/query_order_status/' + that.order_id)
                     .then(function (response) {
                         if(response.data.status){
                             that.loading = true;
@@ -203,7 +227,7 @@ export default {
                                 mode: CryptoJS.mode.CBC,
                                 padding: CryptoJS.pad.Pkcs7
                             }).toString()
-                            const BASE_LABEL = '<script src="https://unpkg.com/nolayreading@0.1.0/dist/nft-card.min.js"></scrip' + 't>'
+                            const BASE_LABEL = '<script src="https://unpkg.com/nolayreading@latest/dist/nft-card.min.js"></scrip' + 't>'
                             that.message = BASE_LABEL + '<nolay-card tokenid="' + that.class_id_or_price + '" enc_message="' + message + '"></nolay-card>'
                         }
                     });
@@ -216,20 +240,20 @@ export default {
             if(this.order_done){
                 return true;
             }
-          const pattern_eth = /^0x[a-fA-F0-9]{40}$/
+          const pattern_ckb = /^ckb[0-9a-fA-F]+/
           const pattern_class = /[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/
           var is_class_id = pattern_class.test(this.class_id_or_price)
-          var is_price = pattern_eth.test(this.class_id_or_price)
+          var is_price = pattern_ckb.test(this.class_id_or_price)
           return !is_class_id && !is_price
         },
 
-        notEthAddress () {
+        notCKBAddress () {
           if(this.paid){
               return true
           }
-          const pattern_eth = /^0x[a-fA-F0-9]{40}$/
-          var is_class_id = pattern_eth.test(this.class_id_or_price)
-          return !is_class_id
+          const pattern_ckb = /^ckb[0-9a-fA-F]+/
+          var is_ckb_address = pattern_ckb.test(this.class_id_or_price)
+          return !is_ckb_address
         },
     }
 }
