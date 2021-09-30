@@ -159,7 +159,8 @@ export default {
                                 mode: CryptoJS.mode.CBC,
                                 padding: CryptoJS.pad.Pkcs7
                             }).toString()
-                            const BASE_LABEL = '<script src="https://unpkg.com/nolayreading@latest/dist/nft-card.min.js"></scrip' + 't>'
+                            //message = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(message));
+                            const BASE_LABEL = '<script src="https://unpkg.zhimg.com/nolayreading@latest/dist/nft-card.min.js"></scrip' + 't>'
                             that.message = BASE_LABEL + '<nolay-card tokenid="' + that.class_id_or_price + '" enc_message="' + message + '"></nolay-card>'
                         }else{
                             that.message = response.data.reason
@@ -222,13 +223,16 @@ export default {
 
                             const iv = '1234567887654321'
                             var key = response.data.priv_key
+                            
                             var message = CryptoJS.AES.encrypt(that.unenc_message, CryptoJS.enc.Utf8.parse(key), {
                                 iv: CryptoJS.enc.Utf8.parse(iv),
                                 mode: CryptoJS.mode.CBC,
                                 padding: CryptoJS.pad.Pkcs7
                             }).toString()
-                            const BASE_LABEL = '<script src="https://unpkg.com/nolayreading@latest/dist/nft-card.min.js"></scrip' + 't>'
-                            that.message = BASE_LABEL + '<nolay-card tokenid="' + that.class_id_or_price + '" enc_message="' + message + '"></nolay-card>'
+                            //message = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(message));
+                            var tokenid = response.data.token_id
+                            const BASE_LABEL = '<script src="https://unpkg.zhimg.com/nolayreading@latest/dist/nft-card.min.js"></scrip' + 't>'
+                            that.message = BASE_LABEL + '<nolay-card tokenid="' + tokenid + '" enc_message="' + message + '"></nolay-card>'
                         }
                     });
           }, 0)

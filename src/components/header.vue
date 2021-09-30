@@ -14,7 +14,10 @@
         <!-- 在v-spacer上面的标签将会在导航栏左侧 在v-spacer下面的标签将会在导航栏右侧 -->
         <v-spacer></v-spacer>
         <!-- 按钮 -->
-        <v-btn outlined class="mx-2" color="grey">
+        <v-btn outlined class="mx-2" color="grey" @click="onClickDocs">
+            <span>Docs</span>
+        </v-btn>
+        <v-btn outlined class="mx-2" color="grey" @click="onClickGithub">
             <span>Github</span>
         </v-btn>
       </v-app-bar>
@@ -24,6 +27,16 @@
 <script>
 export default {
   name: 'Header',
+  methods: {
+      onClickGithub(){
+        window.location.href = "https://github.com/nolaytech"
+        return
+      },
+      onClickDocs(){
+        window.location.href = "https://pandatea.life/post/nolayreading-bang-zhu-wen-dang-andshi-yong-zhi-nan/"
+        return
+      }
+  }
 }
 </script>
 
