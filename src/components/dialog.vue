@@ -100,7 +100,7 @@ export default {
   components: {
   },
   data: () => ({
-      message: "Please enter the Infomations you want to sell...\nenter your CKBAddress and Price in the box below \nor\nEnter a MibaoClassID which would be used in decryption\n",
+      message: "Please enter the Information you want to sell...\nenter your CKBAddress and Price in the box below \nor\nEnter a MibaoClassID which would be used in decryption\n",
       loading: false,
       order_id: '',
       qr_code: '',
