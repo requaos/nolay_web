@@ -145,7 +145,7 @@ export default {
             if(this.isClassId()){
                 //   发送bind请求 
                 that.loading = true;
-                axios.get('https://api.nolay.tech:5000/new_bind_order/' + this.class_id_or_price)
+                axios.get('http://101.200.91.26:5000/new_bind_order/' + this.class_id_or_price)
                     .then(function (response) {
                         // 用返回结果 加密 unenc_message
                         console.log(response);
@@ -173,7 +173,7 @@ export default {
                 return true;
             }else if(this.isEthAddress()){
                 //   发送mint请求 
-                axios.get('https://api.nolay.tech:5000/new_create_order/' + this.class_id_or_price + "/" + this.price)
+                axios.get('http://101.200.91.26:5000/new_create_order/' + this.class_id_or_price + "/" + this.price)
                     .then(function (response) {
                         // 用返回结果 加密 unenc_message
                         console.log(response)
@@ -206,7 +206,7 @@ export default {
           var that = this
           setTimeout(()=>{
           // 这里ajax 请求的代码片段和判断是否停止定时器
-            axios.get('https://api.nolay.tech:5000/query_order_status/' + that.order_id)
+            axios.get('http://101.200.91.26:5000/query_order_status/' + that.order_id)
                     .then(function (response) {
                         if(response.data.status){
                             that.loading = true;
