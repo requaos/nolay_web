@@ -44,9 +44,12 @@
 ## About The Project
 
 NolayReading is a knowledge paid components for pay-per-view.
+
 Unlike traditional pay-for-content, NolayReading is more focus on `Decentralisation`.
 
-More interesting features will be updated later
+`Defi for Reading`,`Promotions`...
+
+ More interesting features will be updated later
 
 ### Built With
 
