@@ -33,7 +33,7 @@ export default {
         return
       },
       onClickDocs(){
-        window.location.href = "https://pandatea.life/post/nolayreading-bang-zhu-wen-dang-andshi-yong-zhi-nan/"
+        window.location.href = "https://pandatea.life/post/nolayreading-documents/"
         return
       }
   }
