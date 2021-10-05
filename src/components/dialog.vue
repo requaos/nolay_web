@@ -24,7 +24,7 @@
             :rules="[rules.required, rules.class_or_price]"
             outlined
             dense
-            label="MibaoClassID or CKBAddress"
+            label="CKBAddress or MibaoClassID"
             type="text"
           >
             <template v-slot:append>
