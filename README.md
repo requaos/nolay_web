@@ -10,7 +10,7 @@
   <p align="center">
     Knowledge Paid Components by Nervos NFT
     <br />
-    <a href="http://101.200.91.26"><strong>Just Try it!</strong></a>
+    <a href="https://nolay.tech"><strong>Just Try it!</strong></a>
     <br />
     <br />
     <a href="https://github.com/nolaytech/nolay_web">Explore the docs »</a>
@@ -73,10 +73,10 @@ Just Click It!
 
 As long as you have the Specific NFT, the cipher will be decrypted.
 
-### [Sell](http://101.200.91.26)
+### [Sell](https://nolay.tech)
 
 If you want to sell some content or knowledge..
-just open [nolay.tech](http://101.200.91.26)
+just open [nolay.tech](https://nolay.tech)
 
 ![](./images/screenshot_web.png)
 
