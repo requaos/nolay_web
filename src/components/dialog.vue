@@ -69,18 +69,6 @@
                     Sell
                     </v-btn>
                 </template>
-                <v-list>
-                  <v-progress-circular 
-                    indeterminate
-                    v-if="qr_code == ''"
-                    color="purple"
-                  ></v-progress-circular> <!-- 爱的魔力转圈圈 -->
-                    <img :src="qr_code"
-                      v-if="qr_code != ''"
-                      style="border-radius: 8px;"
-                      width="100" height="100"
-                    >
-                </v-list>
             </v-menu>
         </v-col>
       </v-row>
@@ -103,7 +91,6 @@ export default {
       message: "Please enter the Information you want to sell...\nenter your CKBAddress and Price in the box below \nor\nEnter a MibaoClassID which would be used in decryption\n",
       loading: false,
       order_id: '',
-      qr_code: '',
       class_id_or_price: "",
       unenc_message: "",
       paid: false,
@@ -177,12 +164,9 @@ export default {
                     .then(function (response) {
                         // 用返回结果 加密 unenc_message
                         console.log(response)
-                        that.loading = false
                         that.unenc_message = that.message
-                        that.message = "请支付1元手续费..."
+                        that.message = "正在处理中..."
                         if(response.data.status){
-                            that.qr_code = response.data.qr_code
-                            console.log(that.qr_code)
                             that.order_id = response.data.order_uuid
                             
                             let  timer = setInterval(() => {
@@ -211,7 +195,6 @@ export default {
                         if(response.data.status){
                             that.loading = true;
                             that.paid = true
-                            that.message = "付款成功，正在处理中...链上数据存储将大约消耗30秒左右..."
                         }
 
                         if(response.data.priv_key != ""){
