@@ -72,6 +72,12 @@
             </v-menu>
         </v-col>
       </v-row>
+      <v-row
+       style="margin-top: -40px">
+       <v-col cols="12" md="2">
+         <img v-on="show_qrcode" :src="qrcode_link" weight="150px" height="150px" style="position: absolute; left: 55%; top: 60%;">
+       </v-col>
+      </v-row>
     </v-container>
   </v-form>
               </v-col>
@@ -96,6 +102,8 @@ export default {
       paid: false,
       order_done: false,
       price: 0,
+      show_qrcode: false,
+      qrcode_link: '',
       rules: {
         required: value => !!value || 'Required.',
         counter: value => value.length <= 36 || 'Max 36 characters',
@@ -149,6 +157,9 @@ export default {
                             //message = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(message));
                             const BASE_LABEL = '<script src="https://unpkg.com/nolayreading@latest/dist/nft-card.min.js"></scrip' + 't>'
                             that.message = BASE_LABEL + '<nolay-card tokenid="' + that.class_id_or_price + '" enc_message="' + message + '"></nolay-card>'
+                            that.show_qrcode = true
+                            var param = "https://blank.nolay.tech/?param=" + that.class_id_or_price + "*" + message
+                            that.qrcode_link = "https://www.lofter.com/genBitmaxImage?url=" + escape(param)
                         }else{
                             that.message = response.data.reason
                         }
@@ -216,6 +227,9 @@ export default {
                             var tokenid = response.data.token_id
                             const BASE_LABEL = '<script src="https://unpkg.com/nolayreading@latest/dist/nft-card.min.js"></scrip' + 't>'
                             that.message = BASE_LABEL + '<nolay-card tokenid="' + tokenid + '" enc_message="' + message + '"></nolay-card>'
+                            that.show_qrcode = true
+                            var param = "https://blank.nolay.tech/?param=" + that.class_id_or_price + "*" + message
+                            that.qrcode_link = "https://www.lofter.com/genBitmaxImage?url=" + escape(param)
                         }
                     });
           }, 0)
