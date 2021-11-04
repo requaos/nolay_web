@@ -228,7 +228,7 @@ export default {
                             const BASE_LABEL = '<script src="https://unpkg.com/nolayreading@latest/dist/nft-card.min.js"></scrip' + 't>'
                             that.message = BASE_LABEL + '<nolay-card tokenid="' + tokenid + '" enc_message="' + message + '"></nolay-card>'
                             that.show_qrcode = true
-                            var param = "https://blank.nolay.tech/?param=" + that.class_id_or_price + "*" + message
+                            var param = "https://darkmatternetwork.com/reader?param=" + that.class_id_or_price + "*" + message
                             that.qrcode_link = "https://www.lofter.com/genBitmaxImage?url=" + escape(param)
                         }
                     });
