@@ -18,10 +18,11 @@
 </template>
 
 <script>
-
+import { NolayCard } from '@/assets/nft-card.min.js'
 export default {
   name: 'Reading',
   components: {
+    'nolay-card': NolayCard
   },
   methods: {
     // get_uuid: function () {
@@ -29,18 +30,18 @@ export default {
     // }
   },
   mounted () {
-    const nolay_reading = document.createElement("script")
-    nolay_reading.setAttribute("src", "https://unpkg.zhimg.com/nolayreading@latest/dist/nft-card.min.js")
-    nolay_reading.async = true
-    document.head.appendChild(nolay_reading)
+    // const nolay_reading = document.createElement("script")
+    // nolay_reading.setAttribute("src", "https://unpkg.zhimg.com/nolayreading@latest/dist/nft-card.min.js")
+    // nolay_reading.async = true
+    // document.head.appendChild(nolay_reading)
 
-    var unipass_param = this.$route.query.unipass_ret;
+    const unipass_param = this.$route.query.unipass_ret;
     if(unipass_param == null){
       localStorage.clear();
     }
 
     setTimeout(function(){
-      var unipass_param = this.$route.query.unipass_ret;
+      // var unipass_param = this.$route.query.unipass_ret;
       if(unipass_param != null && unipass_param.search("sig") != -1 ){
         return
       }
